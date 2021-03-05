@@ -78,6 +78,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="12dp"
+        android:onClick="calculate"
         android:text="Berechnen"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/sendButton"

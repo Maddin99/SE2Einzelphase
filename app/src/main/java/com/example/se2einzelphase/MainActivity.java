@@ -39,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
         ).start();
     }
 
+    public void calculate(View view) {
+        EditText matrikelEditText = findViewById(R.id.matrikelInput);
+        String responseText = this.getPairsWithSameDivisor(matrikelEditText.getText().toString());
+        TextView resultTextView = findViewById(R.id.resultText);
+        resultTextView.setText(responseText);
+    }
+
     private String getStudentInfoFromServer(String matriculationNumber){
         String responseText = "";
         try {
@@ -55,5 +62,39 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return responseText;
+    }
+
+    private String getPairsWithSameDivisor(String matriculationNumber){
+        StringBuilder result = new StringBuilder();
+        int[] arr = convertStringToIntArray(matriculationNumber);
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (shareDivisor(arr[i], arr[j])){
+                    result.append("(").append(i).append(",").append(j).append(") ");
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    private boolean shareDivisor(int i, int j){
+        if (i <= 1 || j <= 1) {
+            return false;
+        }
+        for (int k = 2; k <= Math.min(i, j); k++) {
+            if (i % k == 0 && j % k == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int[] convertStringToIntArray(String s){
+        char[] carr = s.toCharArray();
+        int[] iarr = new int[carr.length];
+        for (int i = 0; i < carr.length; i++){
+            iarr[i] = Character.getNumericValue(carr[i]);
+        }
+        return iarr;
     }
 }
